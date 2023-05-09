@@ -23,6 +23,19 @@ describe('GET /api/catagoires', () => {
             expect('slug' in response.body[0]).toBe(true);
             expect('description' in response.body[0]).toBe(true);
         })
+    });
+});
 
+describe('error handlers', () => {
+    test('Should respond with 404 for bad request', () => {
+        //Arrange
+        //Act
+        //Assert
+        return request(app)
+        .get('/api/catagoies')
+        .expect(404)
+        .then(({body}) => {
+            expect(body.message).toBe('404 path not found')
+        })
     });
 });
