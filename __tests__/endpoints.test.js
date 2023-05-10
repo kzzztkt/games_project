@@ -77,3 +77,16 @@ describe('get api reviews from parametric review_id', () => {
         })
     });
 });
+
+describe('receiving a 404 on an invalid param', () => {
+    test('should receive a 404 error when given an id that doesnt exist', () => {
+        //Arrange
+        //Act
+        //Assert
+        return request(app).get('/api/reviews/200550')
+        .expect(404)
+        .then(({body}) => {
+            expect(body.message).toEqual('404 not found')
+        })
+    });
+});
