@@ -2,6 +2,7 @@ const express = require('express');
 const { getCatgories } = require('./controllers/getCategories.controller');
 const { getEndpoints } = require('./controllers/getEndpoints.controller');
 const { getSingleReview } = require('./controllers/getSingleReview.controller');
+const { getReviews } = require('./controllers/getReviews.controller');
 const app = express();
 
 app.use(express.json());
