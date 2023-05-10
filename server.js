@@ -9,6 +9,7 @@ app.use(express.json());
 app.get('/api', getEndpoints);
 app.get('/api/categories', getCatgories);
 app.get('/api/reviews/:review_id', getSingleReview);
+app.get('/api/reviews', getReviews);
 
 app.use('/*', (req, res) => {
         res.status(404).send({message:'404 path not found'})
