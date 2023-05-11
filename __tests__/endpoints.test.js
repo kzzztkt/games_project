@@ -90,3 +90,28 @@ describe('receiving a 404 on an invalid param', () => {
         })
     });
 });
+describe('GET /api/reviews', () => {
+        test('Return status:200 and array of review object ', () => {
+            //Arrange
+            //Act
+            return request(app).get('/api/reviews')
+            .expect(200)
+            .then((response) => {
+                response.body.reviews.forEach(review => {
+                    expect('owner' in review).toBe(true);
+                    expect('title' in review).toBe(true);
+                    expect('review_id' in review).toBe(true);
+                    expect('category' in review).toBe(true);
+                    expect('review_img_url' in review).toBe(true);
+                    expect('created_at' in review).toBe(true);
+                    expect('votes' in review).toBe(true);
+                    expect('owner' in review).toBe(true);
+                    expect('designer' in review).toBe(true);
+                    expect('comment_count' in review).toBe(true);
+                })
+                expect(response.body.reviews).toBeSortedBy('created_at');
+                expect(response.body.reviews.length).toBe(13);
+            })
+            //Assert
+        });
+});
