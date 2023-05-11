@@ -11,7 +11,6 @@ beforeEach(()=>{
 afterAll(() => {
     return db.end();
 })
-
 describe('GET /api/categoires', () => {
     test('should respond with an array of catagories which have the properties of slug and description ', () => {
         //Arrange
@@ -26,7 +25,6 @@ describe('GET /api/categoires', () => {
         })
     });
 });
-
 describe('error handlers', () => {
     test('Should respond with 404 for bad request', () => {
         //Arrange
@@ -40,7 +38,6 @@ describe('error handlers', () => {
         })
     });
 });
-
 describe('Respond with all available endpoint', () => {
     test('should respond with list of endpoints', () => {
         //Arrange
@@ -54,7 +51,6 @@ describe('Respond with all available endpoint', () => {
 
     });
 });
-
 describe('get api reviews from parametric review_id', () => {
     test('should return an object containing properties of each review from given id', () => {
         //Arrange
@@ -77,7 +73,6 @@ describe('get api reviews from parametric review_id', () => {
         })
     });
 });
-
 describe('receiving a 404 on an invalid param', () => {
     test('should receive a 404 error when given an id that doesnt exist', () => {
         //Arrange
@@ -114,4 +109,31 @@ describe('GET /api/reviews', () => {
             })
             //Assert
         });
+});
+describe('GET /api/reviews/:review_id/comments', () => {
+    test('Should respond with array of comments for the given review_id', () => {
+        return request(app).get('/api/reviews/3/comments')
+        .expect(200)
+        .then((result) => {
+            result.body.comments.forEach(comment => {
+                expect('comment_id' in comment).toBe(true)
+                expect('body' in comment).toBe(true)
+                expect('review_id' in comment).toBe(true)
+                expect('author' in comment).toBe(true)
+                expect('votes' in comment).toBe(true)
+                expect('created_at' in comment).toBe(true)
+                expect(comment.review_id).toBe(3)
+            })
+        
+        })
+    });
+});
+describe('GET /api/reviews/:review_id/comments', () => {
+    test('Should respond status 400 when given wrong endpoitn datatype', () => {
+        return request(app).get('/api/reviews/somethingelse/comments')
+        .expect(400)
+        .then((result) => {
+            expect(result.body).toEqual({message: 'Bad request' })
+        })
+    });
 });
