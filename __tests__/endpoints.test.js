@@ -146,3 +146,23 @@ describe('GET /api/reviews/:review_id/comments', () => {
         })
     });
 });
+describe('POST /api/reviews/:review/comments', () => {
+    test('should respond: 201 with new comment ', () => {
+        //Arrange
+        const body = {
+            username: 'mallionaire',
+            body: 'This is my new comment!'
+          }
+        return request(app).post('/api/reviews/3/comments')
+        .send(body)
+        .expect(201)
+        .then(({body}) => {
+                expect('author' in body.comment).toBe(true);
+                expect('body' in body.comment).toBe(true);
+                expect('comment_id' in body.comment).toBe(true);
+                expect('created_at' in body.comment).toBe(true);
+                expect('review_id' in body.comment).toBe(true);
+                expect('votes' in body.comment).toBe(true);
+        })
+    });
+});
