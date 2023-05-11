@@ -137,3 +137,12 @@ describe('GET /api/reviews/:review_id/comments', () => {
         })
     });
 });
+describe('GET /api/reviews/:review_id/comments', () => {
+    test('Should respond status 404 when given id that doesnt exist', () => {
+        return request(app).get('/api/reviews/999999/comments')
+        .expect(404)
+        .then((result) => {
+            expect(result.body).toEqual({message: 'Resource not found' })
+        })
+    });
+});
