@@ -110,6 +110,7 @@ describe('GET /api/reviews', () => {
                     expect('comment_count' in review).toBe(true);
                 })
                 expect(response.body.reviews).toBeSortedBy('created_at');
+                expect(response.body.reviews.length).toBe(13);
             })
             //Assert
         });
