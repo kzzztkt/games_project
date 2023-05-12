@@ -197,7 +197,6 @@ describe('POST /api/reviews/:review/comments', () => {
         .send(body)
         .expect(404)
         .then(({body}) => {
-            console.log(body.message);
             expect(body.message).toBe('Resource not found')
         })
     });
@@ -223,7 +222,38 @@ describe('POST /api/reviews/:review/comments', () => {
         .send(body)
         .expect(404)
         .then(({body}) => {
-            console.log(body.message);
+            expect(body.message).toBe('Resource not found')
+        })
+    });
+});
+describe('PATCH /api/reviews/:review_id', () => {
+    test('Return status 201: with updated review', () => {
+        return request(app)
+        .patch('/api/reviews/1')
+        .send({inc_vote:3})
+        .expect(201)
+        .then(({body}) => {
+            expect(body.review.title).toBe('Agricola');
+            expect(body.review.votes).toBe(4);
+        })
+    });
+});
+describe('PATCH /api/reviews/:review_id', () => {
+    test('Error handling for invalid data type', () => {
+        return request(app)
+        .patch('/api/reviews/1')
+        .send({inc_vote:'df'})
+        .expect(400)
+        .then(({body}) => {
+            expect(body.message).toBe('Invalid input type')
+        })
+    });
+    test('Error handling for none  existant  resource', () => {
+        return request(app)
+        .patch('/api/reviews/99999')
+        .send({inc_vote:3})
+        .expect(404)
+        .then(({body}) => {
             expect(body.message).toBe('Resource not found')
         })
     });
