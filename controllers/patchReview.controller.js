@@ -8,7 +8,7 @@ exports.patchReviewController = (req, res, next) => {
             res.status(404)
             .send({message: 'Resource not found'})
         }
-        res.status(201)
+        res.status(200)
         .send({review : result });
     }).catch((err) => {
         next(err);

@@ -231,7 +231,7 @@ describe('PATCH /api/reviews/:review_id', () => {
         return request(app)
         .patch('/api/reviews/1')
         .send({inc_vote:3})
-        .expect(201)
+        .expect(200)
         .then(({body}) => {
             expect(body.review.title).toBe('Agricola');
             expect(body.review.votes).toBe(4);
@@ -255,6 +255,15 @@ describe('PATCH /api/reviews/:review_id', () => {
         .expect(404)
         .then(({body}) => {
             expect(body.message).toBe('Resource not found')
+        })
+    });
+    test('Error handling for inlavid data type on api endpoiont', () => {
+        return request(app)
+        .patch('/api/reviews/invaliddatatype')
+        .send({inc_vote:3})
+        .expect(400)
+        .then(({body}) => {
+            expect(body.message).toBe('Invalid input type')
         })
     });
 });
