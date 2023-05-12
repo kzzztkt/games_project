@@ -3,6 +3,7 @@ const { getCatgories } = require('./controllers/getCategories.controller');
 const { getEndpoints } = require('./controllers/getEndpoints.controller');
 const { getSingleReview } = require('./controllers/getSingleReview.controller');
 const { getReviews } = require('./controllers/getReviews.controller');
+const { getUsers } = require('./controllers/getUsers.controller');
 const { getCommentsFromId } = require('./controllers/getCommentsFromId.controller');
 const { postCommentController } = require('./controllers/postComments.controller');
 const { patchReviewController } = require('./controllers/patchReview.controller');
@@ -15,6 +16,7 @@ app.get('/api', getEndpoints);
 app.get('/api/categories', getCatgories);
 app.get('/api/reviews/:review_id', getSingleReview);
 app.get('/api/reviews', getReviews);
+app.get('/api/users', getUsers);
 app.get('/api/reviews/:review_id/comments', getCommentsFromId);
 app.post('/api/reviews/:review_id/comments', postCommentController)
 app.patch('/api/reviews/:review_id', patchReviewController);

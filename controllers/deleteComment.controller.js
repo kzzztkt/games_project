@@ -5,7 +5,6 @@ exports.deleteCommentController = (req, res, next) => {
         res.status(204)
         .send();
     }).catch((err) => {
-        console.log('catch error ' + err);
         next(err);
     })
         

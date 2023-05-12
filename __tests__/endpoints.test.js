@@ -283,3 +283,23 @@ describe('DELETE/api/comments/comment_id error handling', () => {
         .expect(400)
     });
 });
+describe('GET /api/users', () => {
+    test('Return status:200 and array of user object ', () => {
+        //Arrange
+        //Act
+        return request(app).get('/api/users')
+        .expect(200)
+        .then((response) => {
+            response.body.users.forEach(user => {
+                expect('username' in user).toBe(true);
+                expect('name' in user).toBe(true);
+                expect('avatar_url' in user).toBe(true);
+                expect(typeof user.username).toBe('string');
+                expect(typeof user.name).toBe('string');
+                expect(typeof user.avatar_url).toBe('string');
+            })
+            expect(response.body.users.length).toBe(4);
+        })
+        //Assert
+    });
+});
