@@ -146,3 +146,75 @@ describe('GET /api/reviews/:review_id/comments', () => {
         })
     });
 });
+describe('POST /api/reviews/:review/comments', () => {
+    test('should respond: 201 with new comment ', () => {
+        //Arrange
+        const body = {
+            username: 'mallionaire',
+            body: 'This is my new comment!'
+          }
+        return request(app).post('/api/reviews/3/comments')
+        .send(body)
+        .expect(201)
+        .then(({body}) => {
+                expect(typeof body.comment.author).toBe('string');
+                expect(typeof body.comment.body).toBe('string');
+                expect(typeof body.comment.comment_id).toBe('number');
+                expect(typeof body.comment.created_at).toBe('string');
+                expect(typeof body.comment.review_id).toBe('number');
+                expect(typeof body.comment.votes).toBe('number');
+        })
+    });
+    test('should respond: 201 with new comment ', () => {
+        //Arrange
+        const body = {
+            username: 'mallionaire',
+            body: 'This is my new comment!',
+            someOtherKey: 'keyValue'
+          }
+        return request(app).post('/api/reviews/3/comments')
+        .send(body)
+        .expect(201)
+    });
+    test('should respond: 400 from invalid request', () => {
+        //Arrange
+        const body = {
+            username: 'mallionaire',
+            body: 'This is my new comment!'
+
+          }
+        return request(app).post('/api/reviews/string/comments')
+        .send(body)
+        .expect(400)
+    });
+    test('should respond: 404 from none existant id requests', () => {
+        //Arrange
+        const body = {
+            username: 'mallionaire',
+            body: 'This is my new comment!'
+          }
+        return request(app).post('/api/reviews/99999/comments')
+        .send(body)
+        .expect(404)
+    });
+    test('should respond: 400 from lack of data', () => {
+        //Arrange
+        const body = {
+            username: 'mallionaire',
+          }
+        return request(app).post('/api/reviews/3/comments')
+        .send(body)
+        .expect(400)
+    });
+    test('should respond: 404 if username does not exist', () => {
+        //Arrange
+        const body = {
+            username: 'Ben',
+            body: 'This is my new comment!'
+          }
+        return request(app).post('/api/reviews/3/comments')
+        .send(body)
+        .expect(404)
+    });
+});
+
