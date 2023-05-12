@@ -267,4 +267,19 @@ describe('PATCH /api/reviews/:review_id', () => {
         })
     });
 });
-
+describe('DELETE/api/comments/comment_id', () => {
+    test('Should respond 204 and  delete comment', () => {
+        return request(app).delete('/api/comments/5')
+        .expect(204)
+    });
+});
+describe('DELETE/api/comments/comment_id error handling', () => {
+    test('Should respond 404 for none existent resource', () => {
+        return request(app).delete('/api/comments/999999')
+        .expect(404)
+    });
+    test('Should respond 400 for none existent  resource', () => {
+        return request(app).delete('/api/comments/bananae')
+        .expect(400)
+    });
+});
