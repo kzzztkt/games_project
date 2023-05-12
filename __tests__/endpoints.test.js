@@ -159,13 +159,13 @@ describe('POST /api/reviews/:review/comments', () => {
         .then(({body}) => {
                 expect(typeof body.comment.author).toBe('string');
                 expect(typeof body.comment.body).toBe('string');
-                expect(typeof body.comment.comment_id).toBe('number');
+                expect(body.comment.review_id).toBe(3);
                 expect(typeof body.comment.created_at).toBe('string');
-                expect(typeof body.comment.review_id).toBe('number');
+                expect(typeof body.comment.comment_id).toBe('number');
                 expect(typeof body.comment.votes).toBe('number');
         })
     });
-    test('should respond: 201 with new comment ', () => {
+    test('should respond: 201', () => {
         //Arrange
         const body = {
             username: 'mallionaire',
@@ -196,6 +196,10 @@ describe('POST /api/reviews/:review/comments', () => {
         return request(app).post('/api/reviews/99999/comments')
         .send(body)
         .expect(404)
+        .then(({body}) => {
+            console.log(body.message);
+            expect(body.message).toBe('Resource not found')
+        })
     });
     test('should respond: 400 from lack of data', () => {
         //Arrange
@@ -205,6 +209,9 @@ describe('POST /api/reviews/:review/comments', () => {
         return request(app).post('/api/reviews/3/comments')
         .send(body)
         .expect(400)
+        .then(({body}) => {
+            expect(body.message).toBe('Bad request')
+        })
     });
     test('should respond: 404 if username does not exist', () => {
         //Arrange
@@ -215,6 +222,10 @@ describe('POST /api/reviews/:review/comments', () => {
         return request(app).post('/api/reviews/3/comments')
         .send(body)
         .expect(404)
+        .then(({body}) => {
+            console.log(body.message);
+            expect(body.message).toBe('Resource not found')
+        })
     });
 });
 
