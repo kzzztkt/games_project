@@ -8,8 +8,10 @@ const { getCommentsFromId } = require('./controllers/getCommentsFromId.controlle
 const { postCommentController } = require('./controllers/postComments.controller');
 const { patchReviewController } = require('./controllers/patchReview.controller');
 const { deleteCommentController } = require('./controllers/deleteComment.controller');
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/api', getEndpoints);
